@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>I-SHOP</title>
+</head>
+<body>
+<div id="container"></div>
+
+<script src="https://unpkg.com/react@15/dist/react.js"></script>
+<script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+
+<script src="filter.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<script>
+
+    var items = [
+        {
+            title:"product",
+            price: "450 $",
+            urlImg: "img_product.png",
+            count: "20",
+        },
+        {
+            title:"product",
+            price: "350 $",
+            urlImg: "img_product.png",
+            count: "25",
+        },
+        {
+            title:"product",
+            price: "250 $",
+            urlImg: "img_product.png",
+            count: "10",
+        },
+        {
+            title:"product",
+            price: "550 $",
+            urlImg: "img_product.png",
+            count: "5",
+        },
+        {
+            title:"product",
+            price: "300 $",
+            urlImg: "img_product.png",
+            count: "15",
+        },
+        {
+            title:"product",
+            price: "350 $",
+            urlImg: "img_product.png",
+            count: "",
+        },
+    ];
+
+    ReactDOM.render(
+        React.createElement(Ishop,{arrItems:items}),
+        document.getElementById('container')
+    );
+
+</script>
+
+</body>
+</html>

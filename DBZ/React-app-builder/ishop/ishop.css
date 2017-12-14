@@ -1,0 +1,48 @@
+.Ishop__item-countIshop {
+    display: block;
+    width: 1000px;
+    height: auto;
+    position: relative;
+    font-family: sans-serif;
+}
+.Ishop__container {
+    display: inline-block;
+    width: 250px;
+    height: 425px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 20px;
+}
+.Ishop__item-title {
+    display: block;
+    font-size:24px;
+    color: #1e90de;
+    text-transform: uppercase;
+    text-align: center;
+}
+.Ishop__item-img {
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+.Ishop__item-price {
+    text-align: center;
+    font-size: 20px;
+    color: #1e90de;
+}
+.Ishop__item-count {
+    text-align: center;
+    font-size: 16px;
+    color: #1e90de;
+}
+
+.underfined {
+    color: red;
+}
+
+.disabled {
+    visibility: hidden;
+}
+
