@@ -101,12 +101,23 @@ class Ishop_ProductList extends React.PureComponent {
         }, () => {
         })
     };
-
+    addNewItem = (value) => {
+        let copyArr = [...this.state.itemList];
+        copyArr.push(value);
+        this.setState({
+            itemList: copyArr,
+            modeAddNew: !this.state.modeAddNew,
+        }, () => {
+        })
+    };
     addNewProduct = () => {
         this.setState({
             modeAddNew: true,
-        }, () => {
-
+        })
+    };
+    cancelEdit = (value) => {
+        this.setState({
+            modeAddNew: value,
         })
     };
 
@@ -152,6 +163,8 @@ class Ishop_ProductList extends React.PureComponent {
                         </li>
                     </ul>
                     <Ishop_item itemObj = { this.state.itemList[this.state.currIndex] }
+                                cbChanged= { this.addNewItem }
+                                cbMode= { this.cancelEdit }
                                 modeAdd = { this.state.modeAddNew }/>
                 </div>
             </div>

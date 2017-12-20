@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import PropTypes from 'prop-types';
 
 import samsungs8 from './img/galaxy-s8.png';
@@ -9,13 +10,15 @@ import galaxyj from './img/galaxy-j.png';
 class Ishop_item extends React.PureComponent {
 
     static propTypes = {
-        itemObj: PropTypes.object,
-        modeAdd: PropTypes.bool,
+        itemObj:    PropTypes.object,
+        modeAdd:    PropTypes.bool,
+        cbChanged:  PropTypes.func,
+        cbMode:     PropTypes.func,
 
     };
     static defaultProps = {
         itemObj: null,
-        modeAdd: true,
+        modeAdd: false,
     };
 
     classComp = "Ishop_item";
@@ -58,11 +61,20 @@ class Ishop_item extends React.PureComponent {
         } );
     };
 
+    changed = ( value ) => {
+        if ( this.state.cbChanged ) { this.state.cbChanged( value ) }
+    };
 
     isNotEmpty = ( value ) => ( value !== null && value !== undefined && value.length > 0 );
     isExists = ( value ) => ( value !== undefined && value !== null );
 
-
+    cancelEdit = () => {
+      this.setState({
+          modeAdd: false,
+      },() => {
+          this.state.cbMode(this.state.modeAdd)
+      })
+    };
     renderImg = () => {
         switch (this.state.itemObj.imgName) {
             case "GalaxyS8":
@@ -77,12 +89,85 @@ class Ishop_item extends React.PureComponent {
                 return null;
         }
     };
+    validForm = (e) => {
+        if(e.currentTarget.value.length <= 0) {
+            e.currentTarget.value = "введите данные"
+        } else {
+            console.log('e.currentTarget.dataset.type',e.currentTarget.dataset.type);
+            switch (e.currentTarget.dataset.type) {
+                case "url":
+                    this.setState({
+                        imgUrl: e.currentTarget.value
+                    }, () => {
+                        console.log("url", this.state.imgUrl)
+                    });
+                    break;
+                case "title":
+                    this.setState({
+                        title: e.currentTarget.value
+                    }, () => {
+                        console.log("title", this.state.title)
+                    });
+                    break;
+                case "description":
+                    this.setState({
+                        description: e.currentTarget.value
+                    }, () => {
+                        console.log("description", this.state.description)
+                    });
+                    break;
+                case "price":
+                    this.setState({
+                        price: e.currentTarget.value
+                    }, () => {
+                        console.log("price", this.state.price)
+                    });
+                    break;
+                case "stock":
+                    this.setState({
+                        stock: e.currentTarget.value
+                    }, () => {
+                        console.log("stock", this.state.stock)
+                    });
+                    break;
+            }
+        }
+    };
+    clearForm = (e) => {
+        if (e.currentTarget.value)
+        e.currentTarget.value = ""
+    };
+    saveAttributes = () => {
+        let newObject = {};
+        if(this.state.imgUrl !== null && this.state.title !== null) {
+            if(this.state.description !== null && this.state.price !== null) {
+                if(this.state.stock !== null) {
+                    this.setState({
+                        newObject: {
+                            titleProduct: this.state.title,
+                            imgName: this.state.imgUrl,
+                            inStock: this.state.stock,
+                            price: this.state.price,
+                            productDescription: this.state.description,
+                        }
+                    }, () => {
+                        this.changed(this.state.newObject);
+                        console.log("newObject", this.state.newObject);
+                    });
 
+
+                }
+            }
+        }
+
+    };
     renderDefItem = () => {
         return (
             <div className={ this.classComp + "__default" }>
                 <div className={ this.classComp + '__img-box'}>
-                    <img src={this.renderImg()} alt = {this.state.itemObj.titleProduct} className={ this.classComp + '__img-box__image' }/>
+                    <img src={this.renderImg()}
+                         alt = {this.state.itemObj.titleProduct}
+                         className={ this.classComp + '__img-box__image' }/>
                 </div>
                 <div className={ this.classComp + '__content-box' }>
 
@@ -92,7 +177,8 @@ class Ishop_item extends React.PureComponent {
                     <div className={ this.classComp + '__content-box__description' }>
                         Описание
                         <p>
-                            { this.state.itemObj.productDescription }                      </p>
+                            { this.state.itemObj.productDescription }
+                        </p>
                     </div>
                     <div className={ this.classComp + '__content-box__price' }>
                         Цена:
@@ -116,22 +202,52 @@ class Ishop_item extends React.PureComponent {
 
     renderNewItemEditor = () => {
         return (
-            <div className={ this.classComp + "__add-product" }>
-                <div className={ this.classComp + '__img-box'}>
+            <div>
+                <div className = { this.classComp + "__editor" }>
+                    <div className={ this.classComp + "__add-product-image" }>
+                        <label htmlFor="">Введите URL картинки</label>
+                        <input type="text"
+                               data-type="url"
+                               onFocus={this.clearForm}
+                               onBlur={this.validForm}/>
+                    </div>
+                    <div className={ this.classComp + "__add-product" }>
+                        <div className={ this.classComp + '__content-box' }>
+                            <div className={ this.classComp + '__content-box__title' }>
+                                <label htmlFor="title">Название модели:</label>
+                                <input type="text"
+                                       id="title"
+                                       data-type="title"
+                                       onBlur={this.validForm} />
+                            </div>
+                            <div className={ this.classComp + '__content-box__description-new' }>
+                                <label htmlFor="description">Описание модели:</label>
+                                <textarea
+                                    id="description"
+                                    data-type="description"
+                                    onBlur={this.validForm}/>
+                            </div>
+                            <div className={ this.classComp + '__content-box__price-new' }>
+                                <label htmlFor="title">Цена модели:</label>
+                                <input type="text"
+                                       id="title"
+                                       data-type="price"
+                                       onBlur={this.validForm}/>
+                            </div>
+                            <div className={ this.classComp + '__content-box__in-stock-new' }>
+                                <label htmlFor="title">Количество на складе:</label>
+                                <input type="text"
+                                       id="title"
+                                       data-type="stock"
+                                       onBlur={this.validForm}/>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <div className={ this.classComp + '__content-box' }>
-                    <div className={ this.classComp + '__content-box__title' }>
-                        Название модели:
-                        <input type="text"/>
-                    </div>
-                    <div className={ this.classComp + '__content-box__description' }>
-
-                    </div>
-                    <div className={ this.classComp + '__content-box__price' }>
-
-                    </div>
-                    <div className={ this.classComp + '__content-box__in-stock' }>
-                    </div>
+                <div className="buttons">
+                    <button onClick = { this.saveAttributes }>Сохранить</button>
+                    <button onClick = { this.cancelEdit }>Отмена</button>
                 </div>
             </div>
         )
