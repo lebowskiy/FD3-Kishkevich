@@ -34,25 +34,27 @@ class Orange extends  Product {
 
 class Scales {
     productsList: Array<Product> = [];
-    sumProducts: number;
-    nameList: Array<string> = [];
 
     constructor() {
-        this.sumProducts = 0;
+
     }
 
     getSumScale():void {
-        this.productsList.filter((item) => {
-            return this.sumProducts = this.sumProducts + item.weight;
+        let weightProducts:number = 0;
+        this.productsList.forEach((item) => {
+            weightProducts += item.weight;
+            return weightProducts;
         });
-        console.log("Общий вес продуктов -->",  this.sumProducts);
+        console.log("Общий вес продуктов -->",  weightProducts);
     }
 
     getNameList():void {
+        let listProducts = [];
         this.productsList.filter((elem) => {
-            return this.nameList.push(elem.name);
+            listProducts.push(elem.name);
+            return listProducts;
         });
-        console.log("Список названий продуктов -->",  this.nameList);
+        console.log("Список названий продуктов -->",  listProducts);
     }
 
     add(item: Product):void{
@@ -93,3 +95,7 @@ scale.add(orange4);
 
 scale.getSumScale();
 scale.getNameList();
+scale.getNameList();
+scale.getNameList();
+scale.getSumScale();
+scale.getSumScale();
