@@ -1,8 +1,10 @@
 
 
 interface IScalable {
-    getScale(_weight: number):number;
-    getName(_name: string):void;
+    weight: number;
+    name: string;
+    getScale():number;
+    getName():void;
 }
 
 
@@ -40,7 +42,7 @@ class Orange {
 }
 
 class Scales {
-    productsList:  Array<object> = [];
+    productsList:  Array<IScalable> = [];
 
     constructor() {
 
@@ -66,7 +68,7 @@ class Scales {
         return _weight.getScale();
     }
 
-    getTitle(_name: IScalable):string {
+    getTitle(_name: IScalable):void {
         return _name.getName();
     }
 
