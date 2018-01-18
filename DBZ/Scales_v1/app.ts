@@ -39,22 +39,20 @@ class Scales {
 
     }
 
-    getSumScale():void {
+    getSumScale():number {
         let weightProducts:number = 0;
         this.productsList.forEach((item) => {
             weightProducts += item.weight;
-            return weightProducts;
         });
-        console.log("Общий вес продуктов -->",  weightProducts);
+        return weightProducts;
     }
 
-    getNameList():void {
+    getNameList():any {
         let listProducts = [];
         this.productsList.filter((elem) => {
             listProducts.push(elem.name);
-            return listProducts;
         });
-        console.log("Список названий продуктов -->",  listProducts);
+        return listProducts;
     }
 
     add(item: Product):void{
@@ -99,3 +97,5 @@ scale.getNameList();
 scale.getNameList();
 scale.getSumScale();
 scale.getSumScale();
+console.log("scale.getSumScale();", scale.getSumScale());
+console.log("scale.getNameList();", scale.getNameList());

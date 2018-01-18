@@ -30,6 +30,7 @@ class Car {
         console.log("car "+this.numb+" beeep!");
     }
 
+
     show():void {
         console.log("car numb="+this.numb+" speed="+this.speed);
     }
