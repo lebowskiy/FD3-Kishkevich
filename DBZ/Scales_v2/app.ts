@@ -6,7 +6,7 @@ interface IScalable {
 }
 
 
-class Apple {
+class Apple implements IScalable {
     weight: number;
     name: string;
     constructor(_weight: number, _name: string) {
@@ -14,8 +14,12 @@ class Apple {
         this.name = _name;
     }
 
-    getWeight(scale: IScalable ):void {
-        scale.getScale(this.weight)
+    getScale():number {
+        return this.weight;
+    }
+
+    getName():string {
+        return this.name;
     }
 
     show():void {
@@ -35,7 +39,7 @@ class Orange {
     }
 }
 
-class Scales implements IScalable{
+class Scales {
     productsList:  Array<object> = [];
 
     constructor() {
@@ -58,12 +62,12 @@ class Scales implements IScalable{
         return listProducts;
     }
 
-    getScale(_weight: number):any {
-        return _weight;
+    getWeight(_weight: IScalable):number {
+        return _weight.getScale();
     }
 
-    getName(_name: string):string {
-        return _name;
+    getTitle(_name: IScalable):string {
+        return _name.getName();
     }
 
     add(item: IScalable):void{
@@ -72,49 +76,19 @@ class Scales implements IScalable{
     }
 }
 
-let apple1 = new Apple(10, "test");
-let apple2 = new Apple(20, "test2");
-let apple3 = new Apple(30, "test3");
+let apple1 = new Apple(10, "Сорт 1");
+let apple2 = new Apple(20, "Сорт 2");
+let apple3 = new Apple(30, "Сорт 3");
 apple1.show();
+
 let Scale = new Scales();
+console.log("weight", Scale.getWeight(apple1));
+console.log("name", Scale.getTitle(apple1));
+Scale.add(apple1);
+Scale.add(apple2);
+Scale.add(apple3);
+console.log("summa: ", Scale.getSumScale());
+console.log("names: ", Scale.getNameList());
 
 
 
-// let apple1 = new Apple(10, "Антоновка");
-// let apple2 = new Apple(9, "Андреевка");
-// let apple3 = new Apple(8, "Александровка");
-// let apple4 = new Apple(7, "Малиновка");
-// apple1.show();
-// apple2.show();
-// apple3.show();
-// apple4.show();
-//
-// let orange1 = new Orange(1, "Миндаль");
-// let orange2 = new Orange(2, "Красный");
-// let orange3 = new Orange(3, "Желтый");
-// let orange4 = new Orange(4, "Без косточек");
-// orange1.show();
-// orange2.show();
-// orange3.show();
-// orange4.show();
-//
-// let scale = new Scales();
-//
-// scale.add(apple1);
-// scale.add(apple2);
-// scale.add(apple3);
-// scale.add(apple4);
-//
-// scale.add(orange1);
-// scale.add(orange2);
-// scale.add(orange3);
-// scale.add(orange4);
-//
-// scale.getSumScale();
-// scale.getNameList();
-// scale.getNameList();
-// scale.getNameList();
-// scale.getSumScale();
-// scale.getSumScale();
-// console.log("scale.getSumScale();", scale.getSumScale());
-// console.log("scale.getNameList();", scale.getNameList());
