@@ -21,6 +21,7 @@ class StorageArea<StorageItem> {
 
     // получить сохранённый объект (объект продолжает храниться)
     getItem(index:number):StorageItem {
+
         return this.items[index];
     }
 }
